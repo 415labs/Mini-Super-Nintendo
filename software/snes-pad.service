@@ -1,0 +1,18 @@
+[Unit]
+Description=SNES controllers (GPIO) to virtual gamepads
+After=multi-user.target
+
+[Service]
+# install.sh fills in the options. To tune by hand, edit this line in
+# /etc/systemd/system/snes-pad.service, then: sudo systemctl daemon-reload && sudo systemctl restart snes-pad
+#   Default      : -n 2 -r 1000 -t 6        (avg ~0.66 ms added latency)
+#   Fast         : -n 2 -r 4000 -t 3 -a 3   (avg ~0.2 ms, needs isolcpus=3, see docs/LATENCY.md)
+#   Fastest      : -n 2 -r 8000 -t 2 -a 3   (avg ~0.12 ms, needs isolcpus=3)
+ExecStart=/usr/local/bin/snes_pad @OPTIONS@
+Restart=on-failure
+User=root
+LimitRTPRIO=99
+LimitMEMLOCK=infinity
+
+[Install]
+WantedBy=multi-user.target

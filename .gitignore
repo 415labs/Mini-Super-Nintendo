@@ -1,0 +1,5 @@
+snes_pad
+*.o
+__pycache__/
+*.pyc
+.DS_Store
